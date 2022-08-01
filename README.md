@@ -1,0 +1,2 @@
+# zhenxun_plugin_wolframalpha
+真寻bot的插件，使用wolframalpha进行科学计算和搜索
