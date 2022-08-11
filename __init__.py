@@ -5,6 +5,7 @@ from nonebot.adapters.onebot.v11 import (
     Message,
     MessageEvent,
 )
+from nonebot.adapters.onebot.v11 import MessageSegment
 from nonebot.internal.params import ArgStr
 from nonebot.params import CommandArg
 from nonebot.typing import T_State
@@ -15,8 +16,8 @@ import wolframalpha
 __zx_plugin_name__ = "wolframalpha"
 __plugin_usage__ = """
 usage：
-    使用wolframalpha进行科学计算和百科
-    wa/WA/wolframalpha +[公式/英语语句]
+    使用wolframalpha进行全能搜索
+    wa/WA/wolframalpha +[内容]
 """
 __plugin_version__ = 0.1
 __plugin_author__ = "luvsagiri"
@@ -25,9 +26,13 @@ __plugin_settings__ = {
     "cmd": ["wa", "WA", "wolframalpha"],
 }
 __plugin_configs__ = {
+    "wolframalpha_APPID": {"value": [], "help": "wolframalpha_APPID,请前往https://developer.wolframalpha.com/获取"},
+}
+__plugin_configs__ = {
     "wolframalpha_APPID": {
         "value": None,
         "help": "wolframalpha_APPID,请前往https://developer.wolframalpha.com/获取",
+        "default_value": "HAGG5L-VTL7UQWJ6K",
     },
 }
 
@@ -47,10 +52,11 @@ async def _(bot: Bot, event: MessageEvent, state: T_State, key_word: str = ArgSt
     client = wolframalpha.Client(app_id)
     res = client.query(key_word)
     for pod in res.pods:
-        replays.append(pod.title)
+        result_sub = ''
+        result_sub += pod.title
         for sub in pod.subpods:
-            replays.append(image(sub.img.src))
-            #replays.append(sub.img.src)
+            result_sub += image(sub.img.src)
+            replays.append(result_sub)
     if isinstance(event, GroupMessageEvent):
         await bot.send_group_forward_msg(
             group_id=event.group_id, messages=custom_forward_msg(replays, bot.self_id, f"全知全能{NICKNAME}")
