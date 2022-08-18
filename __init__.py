@@ -32,7 +32,7 @@ __plugin_configs__ = {
     "wolframalpha_APPID": {
         "value": None,
         "help": "wolframalpha_APPID,请前往https://developer.wolframalpha.com/获取",
-        "default_value": "HAGG5L-VTL7UQWJ6K",
+        "default_value": "",
     },
 }
 
