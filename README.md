@@ -5,6 +5,7 @@
 详情查看[wolframalpha官网](https://www.wolframalpha.com/)
 ## 插件安装
 将本插件文件放到自定义插件目录下或放到extensive_plugins下并安装相关依赖pip3 install wolframalpha
+注意文件夹重命名为wolframalpha
 初次运行后在config.yaml中填写APPID 可至官网免费申请（地址在配置文件中）
 ### 使用
 发送 wa/WA/wolframalpha + 搜索内容
