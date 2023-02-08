@@ -12,6 +12,7 @@ from nonebot.typing import T_State
 from utils.message_builder import custom_forward_msg, image
 from configs.config import NICKNAME, Config
 import wolframalpha
+import re
 
 __zx_plugin_name__ = "wolframalpha"
 __plugin_usage__ = """
@@ -38,6 +39,7 @@ __plugin_configs__ = {
 
 wa = on_command("wa", aliases={"WA", "wolframalpha"}, priority=5, block=True)
 
+plugin_name = re.split(r'[\\/]', __file__)[-2]
 
 @wa.handle()
 async def _(state: T_State, arg: Message = CommandArg()):
@@ -48,7 +50,7 @@ async def _(state: T_State, arg: Message = CommandArg()):
 @wa.got("question", prompt="你想要知道什么？")
 async def _(bot: Bot, event: MessageEvent, state: T_State, key_word: str = ArgStr("question")):
     replays = []
-    app_id = Config.get_config("wolfram", "wolframalpha_APPID")
+    app_id = Config.get_config(plugin_name, "wolframalpha_APPID")
     client = wolframalpha.Client(app_id)
     res = client.query(key_word)
     for pod in res.pods:
